@@ -32,7 +32,7 @@
     
     /* ====== Base & Reset ====== */
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background-color: var(--bg);
@@ -42,6 +42,18 @@
     }
     a { color: inherit; text-decoration: none; }
     h1, h2, h3 { font-family: var(--font-display); color: var(--accent); }
+    img { max-width: 100%; display: block; }
+    
+    /* ====== Layout & Seções ====== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 6%;
+    }
+    section {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
 
     /* ====== NAV ====== */
     .nav {
@@ -50,7 +62,7 @@
       position: sticky; top: 0;
       background: rgba(26, 26, 26, 0.85);
       border-bottom: 1px solid rgba(255,255,255,0.1);
-      z-index: 40; color: var(--text);
+      z-index: 40;
     }
     .brand { display: flex; gap: 12px; align-items: center; }
     .logo {
@@ -60,8 +72,9 @@
       color: #fff; font-weight: 700; font-family: var(--font-display); font-size: 24px;
     }
     .nav-links { display: flex; gap: 24px; align-items: center; }
-    .nav-links a { transition: color 0.2s; color: var(--text); }
+    .nav-links a { transition: color 0.2s; color: var(--text); font-weight: 500;}
     .nav-links a:hover { color: var(--accent); }
+    .nav-buttons { display:flex; gap:8px; align-items:center; }
 
     /* ====== BOTÕES ====== */
     .btn {
@@ -76,7 +89,7 @@
       padding: 10px 18px; border-radius: var(--radius);
       border: 1px solid rgba(255,255,255,0.2);
       background: transparent;
-      transition: all 0.2s ease-in-out; cursor: pointer; color: var(--text);
+      transition: all 0.2s ease-in-out; cursor: pointer; color: var(--text); font-weight: 500;
     }
     .outline:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
 
@@ -84,26 +97,27 @@
     .hero {
       display: grid; grid-template-columns: 1fr 420px;
       gap: 48px; align-items: center;
-      padding: 60px 6%; max-width: 1200px; margin: 0 auto;
+      min-height: 80vh;
     }
     .hero-left h1 { font-size: 2.8rem; line-height: 1.2; margin: 0 0 16px; color: var(--text); }
     .hero-left p { color: var(--muted); margin: 0 0 24px; line-height: 1.6; font-size: 1.1rem; }
-    .hero-img {
+    .hero-actions { display: flex; gap: 16px; align-items: center; }
+    .hero-img-wrapper {
         border-radius: var(--radius); padding: 18px;
         background: linear-gradient(180deg, rgba(139, 92, 246, 0.1), rgba(30, 58, 138, 0.05));
-        display: flex; align-items: center; justify-content: center;
     }
     .product-sample {
-        width: 100%; height: 360px; border-radius: var(--radius); background: var(--card-bg);
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: var(--shadow); font-family: var(--font-display); color: var(--muted);
+        width: 100%; height: 380px; border-radius: var(--radius);
+        box-shadow: var(--shadow); overflow: hidden;
     }
+    .product-sample img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-subtext { margin-top:18px; font-size:14px; color: var(--muted); }
 
     /* ====== CATEGORIAS ====== */
-    .cats {
+    .categories {
       display: flex; flex-wrap: wrap; gap: 16px;
-      padding: 18px 6%; max-width: 1200px; margin: 24px auto;
       justify-content: center;
+      padding-top: 0;
     }
     .cat-button {
       padding: 12px 24px; border-radius: 999px;
@@ -113,161 +127,224 @@
       text-align: center; font-weight: 500;
       transition: all 0.2s ease;
     }
-    .cat-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: var(--accent);
-    }
-    .cat-button.iemanja {
-        background-color: rgba(30, 58, 138, 0.4);
-        border-color: rgba(67, 90, 204, 0.8);
-    }
-    .cat-button.xango {
-        background-color: rgba(139, 92, 246, 0.25);
-        border-color: rgba(167, 139, 250, 0.7);
-    }
+    .cat-button:hover { background: rgba(255, 255, 255, 0.2); border-color: var(--accent); }
+    .cat-button.iemanja { background-color: rgba(30, 58, 138, 0.4); border-color: rgba(67, 90, 204, 0.8); }
+    .cat-button.xango { background-color: rgba(139, 92, 246, 0.25); border-color: rgba(167, 139, 250, 0.7); }
     
-    /* Demais estilos */
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 30px 6%; max-width: 1200px; margin: 0 auto; }
+    /* ====== PRODUTOS (LOJA) ====== */
+    .section-title { text-align: center; }
+    .section-title p { max-width: 600px; margin: 0 auto 30px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .card { background: var(--card-bg); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; transition: all 0.2s ease-in-out; border: 1px solid rgba(0,0,0,0.05); color: #1a1a1a; }
     .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
     .card img { width: 100%; height: 240px; object-fit: cover; border-radius: 8px; }
     .card h3 { margin: 0; font-size: 1.2rem; color: #1a1a1a; font-family: var(--font-body); font-weight: 700; }
     .price { font-weight: 700; color: var(--accent); font-size: 1.1rem; }
-    .card .meta { display: flex; justify-content: space-between; align-items: center; }
-    .cart-side { position: fixed; right: 24px; bottom: 24px; background: #2a2a2a; border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,0.3); width: 380px; max-width: 92%; padding: 18px; display: flex; flex-direction: column; gap: 16px; border: 1px solid rgba(255,255,255,0.1); color: var(--text); }
-    .cart-head { display: flex; justify-content: space-between; align-items: center; }
-    .cart-items { max-height: 320px; overflow: auto; display: flex; flex-direction: column; gap: 12px; }
-    .cart-item { display: flex; gap: 12px; align-items: center; }
-    .cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
-    .cart-item .outline { color: var(--text); border-color: rgba(255,255,255,0.3); }
-    .cart-item .outline:hover { background: rgba(255,255,255,0.1); }
+    .card .meta { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+
+    /* ====== SEÇÃO SOBRE ====== */
+    .section-about { background: #222; }
+    .about-content { max-width:900px; margin:0 auto; text-align: center; }
+    .about-content p { font-size: 1.1rem; line-height: 1.7; color: var(--muted); }
+    
+    /* ====== SEÇÃO CONTATO ====== */
+    .contact-grid { max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 320px; gap:40px; align-items:flex-start; }
+    .contact-form { display:flex; flex-direction:column; gap:12px; }
+    .contact-info { background:#2a2a2a; padding:24px; border-radius:var(--radius); box-shadow: var(--shadow-sm); }
+    .contact-info p { font-size: 0.9rem; color: var(--muted); }
+    .contact-info a { color: var(--accent); font-weight: bold; text-decoration: underline; text-underline-offset: 3px;}
+    
+    /* ====== FORMULÁRIO ====== */
     input, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background-color: #333; color: var(--text); font-family: var(--font-body); font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
     input::placeholder, textarea::placeholder { color: var(--muted); }
     input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3); }
-    #sobre { background: #222; color: var(--text); }
-    #contato > div > div:last-child { background: #2a2a2a; color: var(--text); }
-    footer { padding: 40px 6% 30px; margin-top: 40px; background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; color: var(--text); }
-    @media (max-width: 1000px) { .hero { grid-template-columns: 1fr; grid-auto-rows: auto; text-align: center; } .hero-left { order: 2; } .hero-img { order: 1; } .hero-actions { justify-content: center; } .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { .nav-links { display: none; } .grid { grid-template-columns: 1fr; } .cart-side { width: 92%; right: 4%; left: 4%; bottom: 14px; } #contato > div { grid-template-columns: 1fr; } }
+    
+    /* ====== FOOTER ====== */
+    footer { padding: 40px 6% 30px; margin-top: 40px; background: #1a1a1a; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; color: var(--text); flex-wrap: wrap; gap: 20px;}
+    
+    /* ====== CARRINHO ====== */
+    .cart-side { position: fixed; right: 24px; bottom: 24px; background: #2a2a2a; border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,0.3); width: 380px; max-width: 92%; padding: 18px; display: flex; flex-direction: column; gap: 16px; border: 1px solid rgba(255,255,255,0.1); color: var(--text); z-index: 50;}
+    .cart-head { display: flex; justify-content: space-between; align-items: center; }
+    .cart-items { max-height: 320px; overflow: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 8px; }
+    .cart-item { display: flex; gap: 12px; align-items: center; }
+    .cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+    .cart-item-details { flex:1; }
+    .cart-item-title { font-weight:600; font-size: 0.9rem; }
+    .cart-item-controls { display:flex; align-items: center; gap: 8px; }
+    .cart-item-controls .outline { padding: 4px 8px; }
+    .cart-item-remove { border:none; background: none; cursor:pointer; color: var(--muted); font-size: 1.2rem; }
+    .cart-footer { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px; }
+    .cart-total { display:flex;justify-content:space-between;align-items:center; }
+    .cart-total-value { font-weight:700; font-size: 1.2rem; }
+    .cart-actions { display:flex; gap:8px; margin-top: 16px; }
+    #checkoutBtn { width: 100%; }
+
+    /* ====== RESPONSIVIDADE ====== */
+    @media (max-width: 1000px) { 
+      .hero { grid-template-columns: 1fr; grid-auto-rows: auto; text-align: center; } 
+      .hero-left { order: 2; } 
+      .hero-img-wrapper { order: 1; } 
+      .hero-actions { justify-content: center; } 
+      .grid { grid-template-columns: repeat(2, 1fr); } 
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) { 
+      .nav-links { display: none; } 
+      .grid { grid-template-columns: 1fr; } 
+      .cart-side { width: 92%; right: 4%; left: 4%; bottom: 14px; } 
+      footer { flex-direction: column; text-align: center; }
+    }
   </style>
 </head>
 <body>
  <header class="nav">
-   <div class="brand">
-     <div class="logo">
-       <img src="logo-zandori.png" alt="Logo da Zandori Art">
-     </div>
+   <a href="#home" class="brand" aria-label="Página inicial Zandori Art">
+     <div class="logo">Z</div>
      <div>
        <div style="font-weight:700; font-family: var(--font-body);">Zandori Art</div>
-       <div style="font-size:12px;color:var(--muted)"></div>
      </div>
-   </div>
+   </a>
    <nav class="nav-links" aria-label="principal">
-     <a href="#home">Home</a><a href="#loja">Loja</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
+     <a href="#home">Home</a>
+     <a href="#loja">Loja</a>
+     <a href="#sobre">Sobre</a>
+     <a href="#contato">Contato</a>
    </nav>
-   <div style="display:flex;gap:8px;align-items:center">
+   <div class="nav-buttons">
      <button class="btn" id="openCartBtn">Carrinho (0)</button>
    </div>
  </header>
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-left">
-        <h1>Arte que pulsa com axé e ancestralidade.</h1>
-        <p>Peças de cerâmica fria feitas à mão, carregadas de intenção e história. Perfeitas para seus rituais, decoração afetiva e presentes com significado.</p>
-        <div class="hero-actions">
-          <a href="#loja" class="btn">Ver Coleção Completa</a><a href="#sobre" class="outline">Nossa História</a>
-        </div>
-        <div style="margin-top:18px;font-size:14px" class="muted">Entrega para todo Brasil • Encomendas personalizadas</div>
-      </div>
-      <div class="hero-img">
-        <div class="product-sample">Sua peça principal aqui</div>
-      </div>
-    </section>
-    <section class="cats" aria-label="coleções">
-        <a href="#" class="cat-button iemanja">Coleção Iemanjá</a>
-        <a href="#" class="cat-button xango">Coleção Xangô</a>
-        <a href="#" class="cat-button">Peças Personalizadas</a>
-    </section>
-    <section id="loja" style="padding-top:24px">
-      <div style="max-width:1200px;margin:0 auto;padding:0 6%; text-align: center;">
-        <h2>Nossas Criações</h2>
-        <p class="muted" style="max-width: 600px; margin: 0 auto 30px;">Clique em uma peça para ver mais detalhes e adicionar ao carrinho.</p>
-      </div>
-      <div class="grid" id="productGrid"></div>
-    </section>
-    <section id="sobre" style="padding:40px 6%; background: #222; margin-top: 40px;">
-      <div style="max-width:900px;margin:0 auto; text-align: center;">
-        <h2>Feito com as mãos, guiado pelo coração.</h2>
-        <p class="muted" style="font-size: 1.1rem; line-height: 1.7;">A Zandori Art é um projeto que nasce da minha conexão com a espiritualidade, com os elementos da natureza e com a beleza do trabalho manual. Cada peça é modelada, texturizada e pintada com cuidado, carregando a intenção de ser um canal de axé e afeto no seu lar.</p>
-      </div>
-    </section>
-    <section id="contato" style="padding:50px 6%">
-      <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:center;">
-        <div>
-          <h2>Contato & Encomendas</h2>
-          <p class="muted">Quer uma peça personalizada? Me conte sua ideia, a intenção, o Orixá de devoção ou o que mais seu coração mandar. Responderei em até 48h.</p>
-          <form id="contactForm" style="margin-top: 24px;">
-            <div style="display:flex;flex-direction:column;gap:12px">
-              <input aria-label="nome" id="cname" placeholder="Seu nome" required />
-              <input aria-label="email" type="email" id="cemail" placeholder="Seu e-mail" required />
-              <textarea id="cmsg" placeholder="Descreva sua ideia ou encomenda..." rows="5" required></textarea>
-              <button class="btn" type="submit">Enviar Mensagem</button>
-            </div>
-          </form>
-        </div>
-        <div style="background:#2a2a2a; padding:24px; border-radius:var(--radius); box-shadow: var(--shadow-sm);">
-          <h3>Formas de pagamento</h3>
-          <p class="muted" style="font-size: 0.9rem;">Pix, link de pagamento (cartão de crédito) ou transferência bancária.</p>
-          <h3 style="margin-top:24px">Redes Sociais</h3>
-          <p class="muted" style="font-size: 0.9rem;">Me acompanhe no <a href="https://www.instagram.com/zandori.art/" target="_blank" style="color: var(--accent); font-weight: bold;">@zandori.art</a> ou chame no <a href="https://wa.me/5511964313457" target="_blank" style="color: var(--accent); font-weight: bold;">WhatsApp: (11) 96431-3457</a></p>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <div>
-      <div style="font-weight:700">Zandori Art</div>
-      <div class="muted" style="font-size:13px" id="footer-year"></div>
+
+ <main>
+   <section id="home" class="container hero">
+     <div class="hero-left">
+       <h1>Arte que pulsa com axé e ancestralidade.</h1>
+       <p>Peças de cerâmica fria feitas à mão, carregadas de intenção e história. Perfeitas para seus rituais, decoração afetiva e presentes com significado.</p>
+       <div class="hero-actions">
+         <a href="#loja" class="btn">Ver Coleção Completa</a>
+         <a href="#sobre" class="outline">Nossa História</a>
+       </div>
+       <div class="hero-subtext">Entrega para todo Brasil • Encomendas personalizadas</div>
+     </div>
+     <div class="hero-img-wrapper">
+       <div class="product-sample">
+        
+         <img src="https://i.postimg.cc/9QyH21gK/ceramica-xango.jpg" alt="Prato de Oferenda Xangô, uma das peças de destaque da Zandori Art">
+       </div>
+     </div>
+   </section>
+
+   <section class="container categories" aria-label="coleções">
+       <a href="#" class="cat-button iemanja">Coleção Iemanjá</a>
+       <a href="#" class="cat-button xango">Coleção Xangô</a>
+       <a href="#" class="cat-button">Peças Personalizadas</a>
+   </section>
+
+   <section id="loja" class="container">
+     <div class="section-title">
+       <h2>Nossas Criações</h2>
+       <p>Clique em uma peça para ver mais detalhes e adicionar ao carrinho.</p>
+     </div>
+     <div class="grid" id="productGrid"></div>
+   </section>
+
+   <section id="sobre" class="section-about">
+     <div class="container about-content">
+       <h2>Feito com as mãos, guiado pelo coração.</h2>
+       <p>A Zandori Art é um projeto que nasce da minha conexão com a espiritualidade, com os elementos da natureza e com a beleza do trabalho manual. Cada peça é modelada, texturizada e pintada com cuidado, carregando a intenção de ser um canal de axé e afeto no seu lar.</p>
+     </div>
+   </section>
+
+   <section id="contato" class="container">
+     <div class="contact-grid">
+       <div>
+         <h2>Contato & Encomendas</h2>
+         <p>Quer uma peça personalizada? Me conte sua ideia, a intenção, o Orixá de devoção ou o que mais seu coração mandar. Responderei em até 48h.</p>
+         <form id="contactForm" style="margin-top: 24px;">
+           <div class="contact-form">
+             <input aria-label="nome" id="cname" placeholder="Seu nome" required />
+             <input aria-label="email" type="email" id="cemail" placeholder="Seu e-mail" required />
+             <textarea id="cmsg" placeholder="Descreva sua ideia ou encomenda..." rows="5" required></textarea>
+             <button class="btn" type="submit">Enviar Mensagem</button>
+           </div>
+         </form>
+       </div>
+       <div class="contact-info">
+         <h3>Formas de pagamento</h3>
+         <p>Pix, link de pagamento (cartão de crédito) ou transferência bancária.</p>
+         <h3 style="margin-top:24px">Redes Sociais</h3>
+         <p>Me acompanhe no <a href="https://www.instagram.com/zandori.art/" target="_blank">@zandori.art</a> ou chame no <a href="https://wa.me/5511964313457" target="_blank">WhatsApp</a>.</p>
+       </div>
+     </div>
+   </section>
+ </main>
+
+ <footer>
+   <div>
+     <div style="font-weight:700">Zandori Art</div>
+     <div class="muted" style="font-size:13px" id="footer-year"></div>
+   </div>
+   <div style="text-align:right">
+     <div class="muted">Entrega para todo Brasil</div>
+     <div style="margin-top:7px">
+        <a href="https://wa.me/5511964313457?text=Ol%C3%A1!%20Vi%20seu%20site%20e%20gostaria%20de%20fazer%20uma%20encomenda%20personalizada." target="_blank" class="outline">Fazer encomenda</a>
     </div>
-    <div style="text-align:right">
-      <div class="muted">Entrega para todo Brasil</div>
-      <div style="margin-top:7px"><a href="https://wa.me/5511964313457?text=Ol%C3%A1!%20Vi%20seu%20site%20e%20gostaria%20de%20fazer%20uma%20encomenda%20personalizada." target="_blank" class="outline">Fazer encomenda</a></div>
+   </div>
+ </footer>
+
+ <aside class="cart-side" id="cartSide" style="display:none">
+   <div class="cart-head">
+     <h3>Seu Carrinho</h3>
+     <button class="outline" id="closeCartBtn">Fechar</button>
+   </div>
+   <div class="cart-items" id="cartItems">
+     <div class="muted">Seu carrinho está vazio.</div>
+   </div>
+   <div class="cart-footer">
+    <div class="cart-total">
+        <div class="muted">Total</div>
+        <div class="cart-total-value">R$ <span id="cartTotal">0,00</span></div>
     </div>
-  </footer>
-  <aside class="cart-side" id="cartSide" style="display:none">
-    <div class="cart-head">
-      <h3>Seu Carrinho</h3><button class="outline" id="closeCartBtn">Fechar</button>
+    <div class="cart-actions">
+        <button class="btn" id="checkoutBtn">Finalizar Pedido</button>
+        <button class="outline" id="clearCartBtn">Limpar</button>
     </div>
-    <div class="cart-items" id="cartItems"><div class="muted">Seu carrinho está vazio.</div></div>
-    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px; display:flex;justify-content:space-between;align-items:center">
-      <div class="muted">Total</div><div style="font-weight:700; font-size: 1.2rem;">R$ <span id="cartTotal">0,00</span></div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn" id="checkoutBtn" style="width: 100%;">Finalizar Pedido</button><button class="outline" id="clearCartBtn">Limpar</button>
-    </div>
-  </aside>
+   </div>
+ </aside>
 
   <script>
-    const products = [ {id:1, title:'Barco de Iemanjá', price:85.00, img:'https://i.postimg.cc/k47tCgKy/ceramica-iemanja.jpg', desc:'Barquinho decorativo em cerâmica fria, pintado à mão com detalhes em madrepérola. Ideal para oferendas e altares.'}, {id:2, title:'Prato de Oferenda Xangô', price:120.00, img:'https://i.postimg.cc/9QyH21gK/ceramica-xango.jpg', desc:'Prato ritualístico com o machado de Xangô em alto relevo. Acabamento em tons terrosos e verniz fosco.'}, {id:3, title:'Pote de Ervas Sagradas', price:42.50, img:'https://i.postimg.cc/G29Gk5YQ/ceramica-pote.jpg', desc:'Pote para guardar ervas, fumo ou outros elementos sagrados. Possui tampa com encaixe perfeito para vedação.'}, {id:4, title:'Placa Ponto Riscado (Exu)', price:160.00, img:'https://i.postimg.cc/T3Yw3T1t/ceramica-exu.jpg', desc:'Placa decorativa com ponto riscado gravado na cerâmica. Personalizável com o ponto da sua entidade.'}, {id:5, title:'Castical de Oxum', price:95.00, img:'https://i.postimg.cc/Gpd2NHDv/ceramica-oxum.jpg', desc:'Castiçal em formato de flor com acabamento que imita ouro envelhecido, para honrar a senhora das águas doces.'}, {id:6, title:'Mini Atabaque Decorativo', price:74.90, img:'https://i.postimg.cc/6pQWzJ7J/ceramica-atabaque.jpg', desc:'Atabaque em miniatura para decorar seu altar ou espaço de trabalho. Detalhes pintados à mão.'} ];
+    const products = [ {id:1, title:'Barco de Iemanjá', price:85.00, img:'https://i.postimg.cc/k47tCgKy/ceramica-iemanja.jpg', desc:'Barquinho decorativo em cerâmica fria, pintado à mão com detalhes em madrepérola. Ideal para oferendas e altares.'}, {id:2, title:'Prato de Oferenda Xangô', price:120.00, img:'https://i.postimg.cc/9QyH21gK/ceramica-xango.jpg', desc:'Prato ritualístico com o machado de Xangô em alto relevo. Acabamento em tons terrosos e verniz fosco.'}, {id:3, title:'Pote de Ervas Sagradas', price:42.50, img:'https://i.postimg.cc/G29Gk5YQ/ceramica-pote.jpg', desc:'Pote para guardar ervas, fumo ou outros elementos sagrados. Possui tampa com encaixe perfeito para vedação.'}, {id:4, title:'Placa Ponto Riscado (Exu)', price:160.00, img:'https://i.postimg.cc/T3Yw3T1t/ceramica-exu.jpg', desc:'Placa decorativa com ponto riscado gravado na cerâmica. Personalizável com o ponto da sua entidade.'}, {id:5, title:'Castiçal de Oxum', price:95.00, img:'https://i.postimg.cc/Gpd2NHDv/ceramica-oxum.jpg', desc:'Castiçal em formato de flor com acabamento que imita ouro envelhecido, para honrar a senhora das águas doces.'}, {id:6, title:'Mini Atabaque Decorativo', price:74.90, img:'https://i.postimg.cc/6pQWzJ7J/ceramica-atabaque.jpg', desc:'Atabaque em miniatura para decorar seu altar ou espaço de trabalho. Detalhes pintados à mão.'} ];
     const grid = document.getElementById('productGrid');
     products.forEach(p => { const card = document.createElement('article'); card.className = 'card'; card.innerHTML = `<img src="${p.img}" alt="${p.title}" loading="lazy" /><h3>${p.title}</h3><p class="muted" style="flex-grow: 1;">${p.desc}</p><div class="meta"><div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div><button class="outline" data-id="${p.id}">Adicionar</button></div>`; grid.appendChild(card); });
     
-    // Atualiza o rodapé com seu nome
+    // Atualiza o rodapé
     document.getElementById('footer-year').textContent = `© ${new Date().getFullYear()} — Feito com axé por Camila Zandori`;
     
     let cart = [];
     const cartSide = document.getElementById('cartSide'), openCartBtn = document.getElementById('openCartBtn'), closeCartBtn = document.getElementById('closeCartBtn'), cartItemsContainer = document.getElementById('cartItems'), cartTotalEl = document.getElementById('cartTotal');
     
-    function updateCartUI() { const count = cart.reduce((s, i) => s + i.qty, 0); openCartBtn.textContent = `Carrinho (${count})`; cartItemsContainer.innerHTML = ''; if (cart.length === 0) { cartItemsContainer.innerHTML = '<div class="muted" style="padding: 20px; text-align: center;">Seu carrinho está vazio.</div>'; } else { cart.forEach(it => { const p = products.find(x => x.id === it.id); const el = document.createElement('div'); el.className = 'cart-item'; el.innerHTML = `<img src="${p.img}" alt="${p.title}" /><div style="flex:1"><div style="font-weight:600; font-size: 0.9rem;">${p.title}</div><div class="muted">R$ ${p.price.toFixed(2).replace('.',',')}</div></div><div style="display:flex; align-items: center; gap: 8px;"><button class="outline" style="padding: 4px 8px;" data-op="dec" data-id="${it.id}">-</button><div>${it.qty}</div><button class="outline" style="padding: 4px 8px;" data-op="inc" data-id="${it.id}">+</button><button style="border:none; background: none; cursor:pointer; color: var(--muted);" data-remove="${it.id}">✕</button></div>`; cartItemsContainer.appendChild(el); }); } const total = cart.reduce((s, it) => s + (products.find(x=>x.id===it.id).price * it.qty), 0); cartTotalEl.textContent = total.toFixed(2).replace('.', ','); }
+    function updateCartUI() { const count = cart.reduce((s, i) => s + i.qty, 0); openCartBtn.textContent = `Carrinho (${count})`; cartItemsContainer.innerHTML = ''; if (cart.length === 0) { cartItemsContainer.innerHTML = '<div class="muted" style="padding: 20px; text-align: center;">Seu carrinho está vazio.</div>'; } else { cart.forEach(it => { const p = products.find(x => x.id === it.id); const el = document.createElement('div'); el.className = 'cart-item'; el.innerHTML = `<img src="${p.img}" alt="${p.title}" /><div class="cart-item-details"><div class="cart-item-title">${p.title}</div><div class="muted">R$ ${p.price.toFixed(2).replace('.',',')}</div></div><div class="cart-item-controls"><button class="outline" data-op="dec" data-id="${it.id}">-</button><div>${it.qty}</div><button class="outline" data-op="inc" data-id="${it.id}">+</button><button class="cart-item-remove" data-remove="${it.id}">✕</button></div>`; cartItemsContainer.appendChild(el); }); } const total = cart.reduce((s, it) => s + (products.find(x=>x.id===it.id).price * it.qty), 0); cartTotalEl.textContent = total.toFixed(2).replace('.', ','); }
     function addToCart(id, qty = 1) { const exists = cart.find(i => i.id === id); if (exists) { exists.qty += qty; } else { cart.push({ id, qty }); } updateCartUI(); openCart(); }
-    function changeQty(id, op) { const item = cart.find(x => x.id === id); if (!item) return; if (op === 'inc') { item.qty++; } else if (op === 'dec') { item.qty = Math.max(1, item.qty - 1); } cart = cart.filter(i => i.qty > 0); updateCartUI(); }
+    
+    // [FIX] Corrigido bug que não permitia diminuir a quantidade
+    function changeQty(id, op) { 
+        const item = cart.find(x => x.id === id); 
+        if (!item) return; 
+        if (op === 'inc') { 
+            item.qty++; 
+        } else if (op === 'dec') { 
+            item.qty--; // Apenas decrementa. A linha abaixo remove se chegar a 0.
+        } 
+        cart = cart.filter(i => i.qty > 0); 
+        updateCartUI(); 
+    }
     
     document.addEventListener('click', e => { const target = e.target; if (target.matches('.card button[data-id]')) { addToCart(parseInt(target.getAttribute('data-id'))); } if (target.matches('[data-remove]')) { cart = cart.filter(i => i.id !== parseInt(target.getAttribute('data-remove'))); updateCartUI(); } if (target.matches('button[data-op]')) { changeQty(parseInt(target.getAttribute('data-id')), target.getAttribute('data-op')); } if (target.matches('#openCartBtn')) openCart(); if (target.matches('#closeCartBtn')) closeCart(); if (target.matches('#clearCartBtn')) { cart = []; updateCartUI(); } if (target.matches('#checkoutBtn')) { if (cart.length === 0) return alert('Seu carrinho está vazio.'); alert('SIMULAÇÃO: O próximo passo seria iniciar uma conversa no WhatsApp para combinar o pagamento e a entrega.'); } });
     
     function openCart() { cartSide.style.display = 'flex'; }
     function closeCart() { cartSide.style.display = 'none'; }
     
-    document.getElementById('contactForm').addEventListener('submit', e => { e.preventDefault(); alert('Mensagem enviada! (SIMULAÇÃO). Para um site no GitHub, você precisará de um serviço como Formspree para que o formulário funcione de verdade.'); e.target.reset(); });
+    document.getElementById('contactForm').addEventListener('submit', e => { e.preventDefault(); alert('Mensagem enviada! (SIMULAÇÃO). Para um site real, você precisaria de um serviço como Formspree para que o formulário funcione.'); e.target.reset(); });
     
     updateCartUI();
   </script>
